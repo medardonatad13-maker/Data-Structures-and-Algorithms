@@ -1,0 +1,130 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+// OOP Class responsible for managing student data
+class StudentManager {
+    // Encapsulated (private) HashMap storing Student ID (Key) and Name (Value)
+    private HashMap<Integer, String> students;
+
+    // Constructor to initialize the HashMap
+    public StudentManager() {
+        students = new HashMap<Integer, String>();
+    }
+
+    // Method to add a student
+    public void addStudent(int id, String name) {
+        students.put(id, name);
+    }
+
+    // Method to display all students
+    public void displayAllStudents() {
+        System.out.println(students);
+    }
+
+    // Method to display a specific student by ID
+    public void displaySpecificStudent(int id) {
+        if (students.containsKey(id)) {
+            System.out.println(students.get(id));
+        } else {
+            System.out.println("Student ID " + id + " not found.");
+        }
+    }
+
+    // Method to update a student's name
+    public void updateStudent(int id, String newName) {
+        if (students.containsKey(id)) {
+            students.put(id, newName);
+        } else {
+            System.out.println("Cannot update. Student ID " + id + " does not exist.");
+        }
+    }
+
+    // Method to remove a student
+    public void removeStudent(int id) {
+        students.remove(id);
+    }
+
+    // Method to check if a student ID exists
+    public boolean checkStudentExists(int id) {
+        return students.containsKey(id);
+    }
+
+    // Method to get total number of students
+    public int getTotalStudents() {
+        return students.size();
+    }
+
+    // Method to clear all records
+    public void clearAllStudents() {
+        students.clear();
+    }
+}
+
+// Main Class for User Input and Execution
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StudentManager manager = new StudentManager();
+
+        // 1. ADD ELEMENTS (User Input)
+        System.out.print("How many students do you want to enter? ");
+        int count = scanner.nextInt();
+        scanner.nextLine(); // Consume leftover newline
+
+        for (int i = 1; i <= count; i++) {
+            System.out.print("Enter Student ID #" + i + ": ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            System.out.print("Enter Student Name #" + i + ": ");
+            String name = scanner.nextLine();
+
+            manager.addStudent(id, name);
+        }
+
+        // 2. DISPLAY ALL STUDENTS
+        System.out.println("\nAll Students:");
+        manager.displayAllStudents();
+
+        // 3. DISPLAY A SPECIFIC STUDENT
+        System.out.print("\nEnter Student ID to search: ");
+        int searchId = scanner.nextInt();
+        System.out.println("Student with ID " + searchId + ":");
+        manager.displaySpecificStudent(searchId);
+
+        // 4. UPDATE A STUDENT'S NAME
+        System.out.print("\nEnter Student ID to update: ");
+        int updateId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter new Student Name: ");
+        String newName = scanner.nextLine();
+
+        manager.updateStudent(updateId, newName);
+        System.out.println("After Updating Student ID " + updateId + ":");
+        manager.displayAllStudents();
+
+        // 5. REMOVE A STUDENT
+        System.out.print("\nEnter Student ID to remove: ");
+        int removeId = scanner.nextInt();
+        manager.removeStudent(removeId);
+        System.out.println("After Removing Student ID " + removeId + ":");
+        manager.displayAllStudents();
+
+        // 6. CHECK IF A KEY EXISTS
+        System.out.print("\nEnter Student ID to check if existing: ");
+        int checkId = scanner.nextInt();
+        System.out.println("Is Student ID " + checkId + " existing?");
+        System.out.println(manager.checkStudentExists(checkId));
+
+        // 7. DISPLAY NUMBER OF STUDENTS
+        System.out.println("\nTotal Students:");
+        System.out.println(manager.getTotalStudents());
+
+        // 8. CLEAR ALL ELEMENTS
+        manager.clearAllStudents();
+        System.out.println("\nAfter Clearing All Students:");
+        manager.displayAllStudents();
+
+        scanner.close();
+    }
+}
